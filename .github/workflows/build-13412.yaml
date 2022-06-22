@@ -53,4 +53,4 @@ jobs:
       run: msbuild /m ClassLibrary2.sln
 
     - name: Test
-      run: dotnet test TestProject1\bin\Debug\net5.0-windows\TestProject1.dll
+      run: dotnet test TestProject1\bin\Debug\net5.0\TestProject1.dll
