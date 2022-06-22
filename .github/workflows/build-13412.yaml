@@ -36,13 +36,21 @@ jobs:
       DOTNET_MULTILEVEL_LOOKUP: 0
 
     steps:
-    - uses: actions/checkout@v2
 
-    - name: Restore
-      run: dotnet restore
+    - uses: actions/checkout@v2
+    
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.2
+
+    - name: Restore NuGet packages
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: nuget restore 
 
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      # Add additional options to the MSBuild command line here (like platform or verbosity level).
+      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
+      run: msbuild /m ClassLibrary2.sln
 
     - name: Test
-      run: dotnet test
+      run: dotnet test ClassLibrary2\bin\x86\Debug\net5.0-windows\ClassLibrary2.dll
